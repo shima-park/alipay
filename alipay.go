@@ -122,7 +122,7 @@ func newPrivateKey(path string) (priKey *rsa.PrivateKey, err error) {
 	// Decode the RSA private key
 	priKey, err = x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		err = fmt.Errorf("%sbad private key: %s", LogPrefix, err)
+		err = fmt.Errorf("%s bad private key: %s", LogPrefix, err)
 		return
 	}
 
@@ -235,13 +235,11 @@ func (a *Alipay) verify(vals url.Values, fields []string) (err error) {
 		err = fmt.Errorf("%s illegal signature, want %s, got %s", LogPrefix, signature, signStr)
 		return
 	}
-	_ = notifyID
-	/*
-		err = a.checkNotify(notifyID)
-		if err != nil {
-			return
-		}
-	*/
+
+	err = a.checkNotify(notifyID)
+	if err != nil {
+		return
+	}
 	return
 }
 
@@ -255,7 +253,6 @@ checkNotify 直接访问支付宝借口判断请求是否有效
 func (a *Alipay) checkNotify(notifyID string) (err error) {
 	if notifyID == "" {
 		err = ErrNotFoundNotifyID
-		log.Println("error:", err)
 		return
 	}
 

@@ -2,7 +2,6 @@ package alipay
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -220,7 +219,6 @@ func (a *Alipay) InstantCreditReturn(req *http.Request) (result *InstantCreditRe
 
 	err = a.verify(vals, fields)
 	if err != nil {
-		log.Println("verify error:", err)
 		return
 	}
 
