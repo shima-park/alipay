@@ -57,4 +57,4 @@ $ go run example/main.go
 #### 在浏览器中访问本地服务:
 [http://localhost:9090/index](http://localhost:9090/index)
 
-具体如何使用请查看example/main.go
+具体如何使用请查看[example/main.go](https://github.com/shima-park/alipay/blob/master/example/main.go)
