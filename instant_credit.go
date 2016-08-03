@@ -97,7 +97,7 @@ type InstantCreditNotify struct {
 	BuyerID          string  //  买家支付宝账户号	String(30)	买家支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字。	可空	2088002007013600
 	Price            float64 //  商品单价	Number	如果请求时使用的是total_fee，那么price等于total_fee；如果请求时使用的是price，那么对应请求时的price参数，原样通知回来。	可空	10.00
 	TotalFee         float64 //  交易金额	Number	该笔订单的总金额。请求时对应的参数，原样通知回来。	可空	10.00
-	Quantity         uint    //  购买数量	Number	如果请求时使用的是total_fee，那么quantity等于1；如果请求时使用的是quantity，那么对应请求时的quantity参数，原样通知回来。	可空	1
+	Quantity         int64   //  购买数量	Number	如果请求时使用的是total_fee，那么quantity等于1；如果请求时使用的是quantity，那么对应请求时的quantity参数，原样通知回来。	可空	1
 	Body             string  //  商品描述	String(400)	该笔订单的备注、描述、明细等。对应请求时的body参数，原样通知回来。	可空	Hello
 	Discount         float64 //  折扣	Number	支付宝系统会把discount的值加到交易金额上，如果需要折扣，本参数为负数。	可空	-5
 	IsTotalFeeAdjust string  //  是否调整总价	String(1)	该交易是否调整过价格。	可空	N
@@ -300,8 +300,8 @@ func (a *Alipay) InstantCreditNotify(req *http.Request) (result *InstantCreditNo
 	totalFee, _ = strconv.ParseFloat(vals.Get("total_fee"), 64)
 	discount, _ = strconv.ParseFloat(vals.Get("discount"), 64)
 
-	var quantity uint64
-	quantity, _ = strconv.ParseUint(vals.Get("quantity"), 10, 64)
+	var quantity int64
+	quantity, _ = strconv.ParseInt(vals.Get("quantity"), 10, 64)
 
 	result = &InstantCreditNotify{
 		NotifyTime:       vals.Get("notify_time"),
@@ -325,7 +325,7 @@ func (a *Alipay) InstantCreditNotify(req *http.Request) (result *InstantCreditNo
 		BuyerID:          vals.Get("buyer_id"),
 		Price:            price,
 		TotalFee:         totalFee,
-		Quantity:         uint(quantity),
+		Quantity:         quantity,
 		Body:             vals.Get("body"),
 		Discount:         discount,
 		IsTotalFeeAdjust: vals.Get("is_total_fee_adjust"),
