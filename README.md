@@ -39,9 +39,11 @@ var (
 	// app 支付需要加入rsa公钥密钥
 	// a.InitRSA(publicKeyPath, privateKeyPath)
 
+    // 示例监听的端口
 	port = ":9090"
 
-    localTunnel = "http://eygytquvvu.localtunnel.me" // 通过 lt --port 9090 获取的外网地址
+    // 通过 lt --port 9090 获取的外网地址
+    localTunnel = "http://eygytquvvu.localtunnel.me"
     ...
 )
 ```
